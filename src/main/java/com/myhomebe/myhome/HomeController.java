@@ -1,12 +1,20 @@
 package com.myhomebe.myhome;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
+@RestController
 public class HomeController {
-  @RequestMapping("api/v1/")
-  public String home() {
-    return "Welcome to the MyHome backend";
-  }
+
+    @RequestMapping("/")
+    public String welcome() {
+
+        return "Welcome to the MyHome backend service";
+    }
 }
