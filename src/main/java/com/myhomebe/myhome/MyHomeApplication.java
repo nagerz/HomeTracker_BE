@@ -22,7 +22,6 @@ public class MyHomeApplication {
             project.setName(name);
             projectService.saveProject(project);
          });
-         projectService.getProjects().forEach(System.out::println);
       };
    }
 
