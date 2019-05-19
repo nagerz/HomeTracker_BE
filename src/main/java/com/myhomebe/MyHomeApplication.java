@@ -1,4 +1,4 @@
-package com.myhomebe.myhome;
+package com.myhomebe;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;

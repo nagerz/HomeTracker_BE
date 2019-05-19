@@ -1,4 +1,4 @@
-package com.myhomebe.myhome;
+package com.myhomebe;
 
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;

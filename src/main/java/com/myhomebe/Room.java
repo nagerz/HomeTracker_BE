@@ -1,4 +1,4 @@
-// package com.myhomebe.myhome;
+// package com.myhomebe;
 //
 // import javax.persistence.Id;
 // import javax.persistence.GeneratedValue;

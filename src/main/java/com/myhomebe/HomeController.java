@@ -1,4 +1,4 @@
-package com.myhomebe.myhome;
+package com.myhomebe;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

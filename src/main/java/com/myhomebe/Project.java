@@ -1,4 +1,4 @@
-package com.myhomebe.myhome;
+package com.myhomebe;
 
 import io.leangen.graphql.annotations.GraphQLQuery;
 import lombok.*;

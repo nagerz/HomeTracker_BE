@@ -1,4 +1,4 @@
-package com.myhomebe.myhome;
+package com.myhomebe;
 
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
