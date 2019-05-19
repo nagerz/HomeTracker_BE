@@ -17,12 +17,12 @@ public class MyHomeApplication {
 	@Bean
   ApplicationRunner init(ProjectService projectService) {
     return args -> {
-        Stream.of("Project 1", "Project 2", "Project 3").forEach(name -> {
-            Project project = new Project();
-            project.setName(name);
-            projectService.saveProject(project);
-         });
-      };
+      Stream.of("Project 1", "Project 2", "Project 3").forEach(name -> {
+        Project project = new Project();
+        project.setName(name);
+        projectService.saveProject(project);
+      });
+    };
    }
 
 }
