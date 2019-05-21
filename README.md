@@ -36,7 +36,7 @@ To run a test coverage report execute the command: .
 To view HomeTrackr in development, execute the following command from the project directory: `mvn spring-boot:run`. To view the application in a web browser, visit `localhost:8080` and navigate the the desired endpoint.
 
 ## Available Endpoints
-The application provides the following endpoints:
+The application is hosted at `https://hometrackr.herokuapp.com` and provides the following endpoints:
 
 ### User Endpoints (NOT YET AVAILABLE)
 #### User Registration
@@ -149,7 +149,7 @@ Accept: application/json
 {
   "name": "New Bedroom",
   "type": "Bedroom",
-  "description": "The new bedroom",
+  "description": "The new bedroom"
 }
 ```
 
@@ -170,7 +170,101 @@ In the event that the request is unsuccessful, the application will return an er
 
 #### Room Update
 
-An existin rooms information can be updated in the database via a `PUT` request to the `/api/v1/rooms/:id` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+An existing room's information can be updated in the database via a `PATCH` request to the `/api/v1/rooms/:id` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+
+``` HTTP
+POST /api/v1/homes
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Updated Bedroom",
+  "type": "Bedroom",
+  "description": "The updated bedroom",
+}
+```
+
+If the request is successful, the application will return the updated room object in the format below, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+{
+    "id": 4,
+    "name": "Updated Bedroom",
+    "type": "Bedroom",
+    "description": "The updated bedroom"
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 404.
+
+
+#### Room Deletion
+To delete an existing room, send a `DELETE` request to the endpoint `/api/v1/rooms/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
+``` HTTP
+status: 404
+body:
+{
+    "error": "Request does not match any records."
+}
+```
+
+### Material Endpoints
+#### Room Show
+
+An individual room currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms/:id` endpoint.
+
+If the request is successful, the application will return the requested room object, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+
+{
+  "id": 1,
+  "name": "Living Room 1",
+  "type": "Living Room",
+  "description": "Northeast living room"
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
+
+#### Room Index
+All room items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms` endpoint.
+
+If the request is successful, the application will return an array containing room objects, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+
+[
+  {
+    "id": 1,
+    "name": "Living Room 1",
+    "type": "Living Room",
+    "description": "Northeast living room"
+  },
+  {
+    "id": 2,
+    "name": "Room 2",
+    "type": "Kitchen",
+    "description": "Big Kitchen"
+  },
+  {
+    "id": 3,
+    "name": "Room 3",
+    "type": "Bedroom",
+    "description": "Small bedroom"
+  }
+]
+```
+
+#### Room Create
+
+A new room item can be created and saved in the database via a `POST` request to the `/api/v1/rooms` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
 
 ``` HTTP
 POST /api/v1/homes
@@ -180,7 +274,7 @@ Accept: application/json
 {
   "name": "New Bedroom",
   "type": "Bedroom",
-  "description": "The new bedroom",
+  "description": "The new bedroom"
 }
 ```
 
@@ -199,9 +293,40 @@ body:
 
 In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
 
+#### Room Update
 
-#### Meal Food Deletion
-To delete a food item on a meal, a successful `DELETE` request to the endpoint `/api/v1/meals/:meal_id/foods/:food_id` will delete the applicable MealFood record in the database and return a status code of `204`. An unsuccessful request will return the following:
+An existing room's information can be updated in the database via a `PATCH` request to the `/api/v1/rooms/:id` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+
+``` HTTP
+POST /api/v1/homes
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Updated Bedroom",
+  "type": "Bedroom",
+  "description": "The updated bedroom",
+}
+```
+
+If the request is successful, the application will return the updated room object in the format below, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+{
+    "id": 4,
+    "name": "Updated Bedroom",
+    "type": "Bedroom",
+    "description": "The updated bedroom"
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 404.
+
+
+#### Room Deletion
+To delete an existing room, send a `DELETE` request to the endpoint `/api/v1/rooms/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
 ``` HTTP
 status: 404
 body:
@@ -210,99 +335,6 @@ body:
 }
 ```
 
-### Recipe Endpoints
-#### Recipe Index
-
-All recipe items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/recipes` endpoint.
-
-If the request is successful, the application will return an array containing recipe objects, along with a status code of 200.
-
-``` HTTP
-status: 200
-body:
-
-[
-  {
-    "id": 1,
-    "name": "recipe name",
-    "calories": 100,
-    "url": "example_url"
-  },
-  {...}
-]
-```
-
-#### Recipe Show
-
-An individual recipe item currently saved in the database can be retrieved via a `GET` request to the `/api/v1/recipes/:id` endpoint.
-
-If the request is successful, the application will return the requested recipe object, along with a status code of 200.
-
-``` HTTP
-status: 200
-body:
-
-{
-  "id": 1,
-  "name": "recipe name",
-  "calories": 100,
-  "url": "example_url"
-}
-```
-
-In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
-
-``` HTTP
-status: 400
-body:
-
-{
-  "error": "Requested recipe could not be found."
-}
-```
-
-#### Recipe Deletion
-A recipe can be deleted from the database via a `DELETE` request to `/api/v1/recipes/:id`, utilizing the `id` of an existing recipe in the database. A successful response will return a `204` status code.
-
-A unsuccessful response due to an `id` not found in the database will return:
- ``` HTTP
- status: 404
- body:
- {"error": "The requested recipe could not be found and was therefore not deleted."}
- ```
-
-#### Recipe Search
-A list of recipes can be retrieved (utilizing a [recipe search microservice](https://github.com/Mackenzie-Frey/recipe_service)) for use in meal recipe creation via a `GET` request to `/api/v1/search/recipes?mealType=MEALTYPE&query=QUERY`. Query parameter values of `mealType` and `query` must be provided as follows:
-
-```
-MEALTYPE = "boring" (regular recipes), "bang-for-your-buck" (recipes optimaized for shortest cook time and maximum claories, or "heart-attack" (maximum calories, minimum health factor).
-QUERY = meal search query, i.e. "chicken", "pasta", or "berries"
-```
-
-A successful response will return a `200` status code and an array of 10 collections of recipe information:
-
-```
-[
-    {
-        "id": 162,
-        "name": "Neiman Marcus Cafe Chicken Tortilla Soup Recipe",
-        "url": "http://recipeofhealth.com/recipe/neiman-marcus-cafe-chicken-tortilla-soup-220132rb",
-        "yield": "1",
-        "calories": 6224,
-        "image": "https://www.edamam.com/web-img/cb6/cb6687b4785e5a1da2e65e6b7a010bb5.jpg",
-        "totalTime": "1",
-        "updatedAt": "2019-05-14T22:22:23.238Z",
-        "createdAt": "2019-05-14T22:22:23.238Z"
-    },{...}
-]
-```
-
-A unsuccessful response will return a `404` error and a message:
- ``` HTTP
- status: 404
- body:
- {"error": "Missing mealType and/or query."}
- ```
 ## Tools
 * Postman
 * dotenv
