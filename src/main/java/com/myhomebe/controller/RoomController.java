@@ -35,13 +35,6 @@ public class RoomController {
       return repository.findById(id);
     }
 
-    // @GetMapping(value = "/{type}")
-    // public List<Room> findByType(@PathVariable("type") String type) {
-    //
-    //   List<Room> rooms = repository.findByType(type);
-    //   return rooms;
-    // }
-
     @GetMapping
     public List<Room> getRooms() {
       List<Room> rooms = new ArrayList<>();
@@ -60,20 +53,20 @@ public class RoomController {
     @PutMapping("/{id}")
     @ExceptionHandler({SpringException.class})
     public Room updateRoom(@RequestBody Room room, @PathVariable Long id) {
-        if (room.getId() != id) {
-          throw new SpringException("test");
-        }
-        if (repository.findById(id) != null && !"".equals(repository.findById(id)) ){
-          return repository.save(room);
-        }else{
-          throw new SpringException("different test");
-        }
+      if (room.getId() != id) {
+        throw new SpringException("test");
+      }
+      if (repository.findById(id) != null && !"".equals(repository.findById(id)) ){
+        return repository.save(room);
+      }else{
+        throw new SpringException("different test");
+      }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteRoom(@PathVariable("id") long id) {
       repository.deleteById(id);
 
-      return new ResponseEntity<>("Room has been deleted!", HttpStatus.OK);
+      return new ResponseEntity<>("Room deleted.", HttpStatus.OK);
     }
 }
