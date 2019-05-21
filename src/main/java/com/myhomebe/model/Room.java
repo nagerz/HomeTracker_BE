@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class Room {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private @NonNull String name;
   private @NonNull String type;

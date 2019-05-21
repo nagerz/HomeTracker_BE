@@ -17,7 +17,7 @@ import javax.persistence.Column;
 
 public class Project {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GraphQLQuery(name = "id", description = "A project's id")
     private Long id;
     @GraphQLQuery(name = "name", description = "A project's name")
