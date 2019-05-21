@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,17 +51,15 @@ public class RoomController {
       return _room;
     }
 
-    @PutMapping("/{id}")
-    @ExceptionHandler({SpringException.class})
-    public Room updateRoom(@RequestBody Room room, @PathVariable Long id) {
-      if (room.getId() != id) {
-        throw new SpringException("test");
-      }
-      if (repository.findById(id) != null && !"".equals(repository.findById(id)) ){
+    @PatchMapping("/{id}")
+    Optional<Room> updateRoom(@RequestBody Room updRoom, @PathVariable Long id) {
+      return repository.findById(id)
+      .map(room -> {
+        room.setName(updRoom.getName());
+        room.setType(updRoom.getType());
+        room.setDescription(updRoom.getDescription());
         return repository.save(room);
-      }else{
-        throw new SpringException("different test");
-      }
+      });
     }
 
     @DeleteMapping("/{id}")

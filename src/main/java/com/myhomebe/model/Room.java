@@ -12,12 +12,6 @@ import java.util.Date;
 
 import java.util.Objects;
 
-// import javax.persistence.GeneratedValue;
-// import javax.persistence.GenerationType;
-// import javax.persistence.Entity;
-// import javax.persistence.Table;
-// import javax.persistence.Column;
-
 @Entity
 @Table(name = "rooms")
 @Getter @Setter
@@ -25,16 +19,16 @@ import java.util.Objects;
 @ToString @EqualsAndHashCode
 
 public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private @NonNull String name;
+  private @NonNull String type;
+  private String description;
 
-    // @Column(name = "name")
-    private @NonNull String name;
-
-    // @Column(name = "type")
-    private @NonNull String type;
-
-    // @Column(name = "description")
-    private String description;
+  Room(String name, String role, String description) {
+    this.name = name;
+    this.type = type;
+    this.description = description;
+  }
 }
