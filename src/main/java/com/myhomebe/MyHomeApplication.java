@@ -13,16 +13,4 @@ public class MyHomeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MyHomeApplication.class, args);
 	}
-
-	@Bean
-  ApplicationRunner init(ProjectService projectService) {
-    return args -> {
-        Stream.of("Project 1", "Project 2", "Project 3").forEach(name -> {
-            Project project = new Project();
-            project.setName(name);
-            projectService.saveProject(project);
-         });
-      };
-   }
-
 }

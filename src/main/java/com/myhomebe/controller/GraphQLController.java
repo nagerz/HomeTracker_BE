@@ -1,4 +1,6 @@
-package com.myhomebe;
+package com.myhomebe.controller;
+
+import com.myhomebe.service.ProjectService;
 
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
