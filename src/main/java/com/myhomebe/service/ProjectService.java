@@ -1,4 +1,7 @@
-package com.myhomebe;
+package com.myhomebe.service;
+
+import com.myhomebe.model.Project;
+import com.myhomebe.repository.ProjectRepository;
 
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
@@ -27,13 +30,6 @@ public class ProjectService {
     public Optional<Project> getProjectById(@GraphQLArgument(name = "id") Long id){
         return projectRepository.findById(id);
     }
-
-    // @GraphQLMutation(name = "createProject")
-    // public Project newProject(@GraphQLArgument(name = "name", name = "address") Project newProject){
-    //     newProject.setName(name);
-    //     newProject.setAddress(address);
-    //     return projectRepository.save(newProject);
-    // }
 
     @GraphQLMutation(name = "saveProject")
     public Project saveProject(@GraphQLArgument(name = "project") Project project){
