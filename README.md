@@ -1,7 +1,7 @@
 # README
 
 ## Description
-HomeTrackr is a web application designed to aid in tracking the production of home and other residential construction projects. The backend service enables reading and writing database access to a users projects, including rooms and materials used during the construcitn of those rooms. HomeTrackr is Java application utilizing with Spring Boot, PostgreSQL, and GraphQL.
+HomeTrackr is a web application designed to aid in tracking the production of home and other residential construction projects. The backend service enables reading and writing database access to a users projects, including rooms and materials used during the construction of those rooms. HomeTrackr is a Java application utilizing Spring Boot, PostgreSQL, and GraphQL.
 
 #### [**_View HomeTrackr in Production_**](https://hometrackr.herokuapp.com/) </br>
 
@@ -12,8 +12,8 @@ HomeTrackr is a web application designed to aid in tracking the production of ho
 To run HomeTrackr on a local machine, navigate to the directory in which you would like the project to be located in, then execute the following commands:
 
 ```
-$ git clone 
-$ cd 
+$ git clone
+$ cd
 $ mvn install # Installs dependencies
 ```
 
@@ -170,7 +170,7 @@ In the event that the request is unsuccessful, the application will return an er
 
 #### Room Update
 
-An existing room's information can be updated in the database via a `PATCH` request to the `/api/v1/rooms/:id` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+An existing room's information can be updated in the database via a `PATCH` request to the `/api/v1/rooms/:id` endpoint. The request may contain any field to be updated. Request should match the format provided below.
 
 ``` HTTP
 POST /api/v1/homes
@@ -211,30 +211,34 @@ body:
 ```
 
 ### Material Endpoints
-#### Room Show
+#### Material Show
 
-An individual room currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms/:id` endpoint.
+An individual material currently saved in the database can be retrieved via a `GET` request to the `/api/v1/materials/:id` endpoint.
 
-If the request is successful, the application will return the requested room object, along with a status code of 200.
+If the request is successful, the application will return the requested material object, along with a status code of 200.
 
 ``` HTTP
 status: 200
 body:
-
 {
-  "id": 1,
-  "name": "Living Room 1",
-  "type": "Living Room",
-  "description": "Northeast living room"
+    "id": 1,
+    "name": "Material name",
+    "vendor": "Store 1",
+    "brand": "Maker A",
+    "model_number": "abc123",
+    "manual_url": "example@url.com",
+    "notes": "Material for the shower.",
+    "quantity": 50,
+    "unit_price": 60
 }
 ```
 
 In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
 
-#### Room Index
-All room items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms` endpoint.
+#### Material Index
+All material items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/materials` endpoint.
 
-If the request is successful, the application will return an array containing room objects, along with a status code of 200.
+If the request is successful, the application will return an array containing material objects, along with a status code of 200.
 
 ``` HTTP
 status: 200
@@ -243,28 +247,22 @@ body:
 [
   {
     "id": 1,
-    "name": "Living Room 1",
-    "type": "Living Room",
-    "description": "Northeast living room"
+    "name": "Material name",
+    "vendor": "Store 1",
+    "brand": "Maker A",
+    "model_number": "abc123",
+    "manual_url": "example@url.com",
+    "notes": "Material for the shower.",
+    "quantity": 50,
+    "unit_price": 60
   },
-  {
-    "id": 2,
-    "name": "Room 2",
-    "type": "Kitchen",
-    "description": "Big Kitchen"
-  },
-  {
-    "id": 3,
-    "name": "Room 3",
-    "type": "Bedroom",
-    "description": "Small bedroom"
-  }
+  {...}
 ]
 ```
 
-#### Room Create
+#### Material Create
 
-A new room item can be created and saved in the database via a `POST` request to the `/api/v1/rooms` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+A new material item can be created and saved in the database via a `POST` request to the `/api/v1/materials` endpoint. The request must contain a material name, and may contain optional fields of vendor, brand, model number, manual url location, notes, quantity, and unit price (in cents). Request should match the format provided below.
 
 ``` HTTP
 POST /api/v1/homes
@@ -272,30 +270,40 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "New Bedroom",
-  "type": "Bedroom",
-  "description": "The new bedroom"
+  "name": "Material name",
+  "vendor": "Store 1",
+  "brand": "Maker A",
+  "model_number": "abc123",
+  "manual_url": "example@url.com",
+  "notes": "Material for the shower.",
+  "quantity": 50,
+  "unit_price": 60
 }
 ```
 
-If the request is successful, the application will return the created room object in the format below, along with a status code of 200.
+If the request is successful, the application will return the created material object in the format below, along with a status code of 200.
 
 ``` HTTP
 status: 200
 body:
 {
-    "id": 4,
-    "name": "New Bedroom",
-    "type": "Bedroom",
-    "description": "The new bedroom"
+    "id": 1,
+    "name": "Material name",
+    "vendor": "Store 1",
+    "brand": "Maker A",
+    "model_number": "abc123",
+    "manual_url": "example@url.com",
+    "notes": "Material for the shower.",
+    "quantity": 50,
+    "unit_price": 60
 }
 ```
 
 In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
 
-#### Room Update
+#### Material Update
 
-An existing room's information can be updated in the database via a `PATCH` request to the `/api/v1/rooms/:id` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+An existing material's information can be updated in the database via a `PATCH` request to the `/api/v1/materials/:id` endpoint. The request must contain any field ot be updated. Request should match the format provided below.
 
 ``` HTTP
 POST /api/v1/homes
@@ -303,30 +311,39 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Updated Bedroom",
-  "type": "Bedroom",
-  "description": "The updated bedroom",
+  "name": "Updated Material name",
+  "vendor": "Store 1",
+  "brand": "Maker A",
+  "model_number": "abc123",
+  "manual_url": "example@url.com",
+  "notes": "Material for the shower.",
+  "quantity": 50,
+  "unit_price": 60
 }
 ```
 
-If the request is successful, the application will return the updated room object in the format below, along with a status code of 200.
+If the request is successful, the application will return the updated material object in the format below, along with a status code of 200.
 
 ``` HTTP
 status: 200
 body:
 {
-    "id": 4,
-    "name": "Updated Bedroom",
-    "type": "Bedroom",
-    "description": "The updated bedroom"
+    "id": 1,
+    "name": "Updated Material name",
+    "vendor": "Store 1",
+    "brand": "Maker A",
+    "model_number": "abc123",
+    "manual_url": "example@url.com",
+    "notes": "Material for the shower.",
+    "quantity": 50,
+    "unit_price": 60
 }
 ```
 
 In the event that the request is unsuccessful, the application will return an error message, along with a status code of 404.
 
-
-#### Room Deletion
-To delete an existing room, send a `DELETE` request to the endpoint `/api/v1/rooms/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
+#### Material Deletion
+To delete an existing material, send a `DELETE` request to the endpoint `/api/v1/materials/:id`. A successful request will delete the applicable Material record in the database and return a status code of `204`. An unsuccessful request will return the following:
 ``` HTTP
 status: 404
 body:
@@ -336,19 +353,6 @@ body:
 ```
 
 ## Tools
-* Postman
-* dotenv
-* node-fetch
-* pryjs
-* babel-jest
-* nodemon
-* scriptjs
-* shelljs
-* supertest
-* beautify
-* hat
-* nyc
-* bcrypt
 * Circle CI
 
 
@@ -362,16 +366,13 @@ body:
 4. Submit a pull request detailing the change that was made.
 
 ##### Submitting a Bug:
-1. Search the existing [issues](https://github.com/nagerz/quantified_self/issues).
+1. Search the existing backend [issues](https://github.com/easbell/Your-Home/issues).
 2. Create a new issue if applicable, or contribute to an existing issue.
 
 ### Related Links:
-###### * [**_Agile Project Board_**](https://github.com/nagerz/quantified_self/projects/1)
-###### * [**_Project Specifications_**](http://backend.turing.io/module4/projects/quantified_self/qs_server_side)
-###### * [**_Project Rubric_**](http://backend.turing.io/module4/projects/quantified_self/rubric)
+###### * [**_Agile Project Board_**](https://github.com/easbell/Your-Home/projects/1)
 
 ### Authors
-* [Mackenzie Frey](https://github.com/Mackenzie-Frey)
 * [Zach Nager](https://github.com/nagerz)
 
 ### Special Recognition

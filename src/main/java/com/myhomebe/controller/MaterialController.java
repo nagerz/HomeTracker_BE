@@ -61,6 +61,7 @@ public class MaterialController {
     Optional<Material> updateMaterial(@RequestBody Material updMaterial, @PathVariable Long id) {
       return repository.findById(id)
       .map(material -> {
+        // Add catches so doesn't reset value to null if not supplied.
         material.setName(updMaterial.getName());
         material.setVendor(updMaterial.getVendor());
         return repository.save(material);
