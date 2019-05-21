@@ -2,6 +2,7 @@ package com.myhomebe.controller;
 
 import com.myhomebe.model.Room;
 import com.myhomebe.repository.RoomRepository;
+import com.myhomebe.exceptions.SpringException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @RestController
 @RequestMapping("/api/v1/rooms")
@@ -42,8 +44,6 @@ public class RoomController {
 
     @GetMapping
     public List<Room> getRooms() {
-      System.out.println("Get all Rooms...");
-
       List<Room> rooms = new ArrayList<>();
       repository.findAll().forEach(rooms::add);
 
@@ -52,17 +52,26 @@ public class RoomController {
 
     @PostMapping
     public Room createRoom(@RequestBody Room room) {
-      System.out.println("Create Room with name " + room.getName());
-
       Room _room = repository.save(room);
 
       return _room;
     }
 
+    @PutMapping("/{id}")
+    @ExceptionHandler({SpringException.class})
+    public Room updateRoom(@RequestBody Room room, @PathVariable Long id) {
+        if (room.getId() != id) {
+          throw new SpringException("test");
+        }
+        if (repository.findById(id) != null && !"".equals(repository.findById(id)) ){
+          return repository.save(room);
+        }else{
+          throw new SpringException("different test");
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteRoom(@PathVariable("id") long id) {
-      System.out.println("Delete Room with ID = " + id + "...");
-
       repository.deleteById(id);
 
       return new ResponseEntity<>("Room has been deleted!", HttpStatus.OK);

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,12 +29,12 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
+    // @Column(name = "name")
     private @NonNull String name;
 
-    @Column(name = "type")
+    // @Column(name = "type")
     private @NonNull String type;
 
-    @Column(name = "description")
+    // @Column(name = "description")
     private String description;
 }
