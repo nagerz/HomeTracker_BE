@@ -40,7 +40,7 @@ public class RoomController {
     //   return rooms;
     // }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Room> getRooms() {
       System.out.println("Get all Rooms...");
 
@@ -50,12 +50,14 @@ public class RoomController {
       return rooms;
     }
 
-    // @PostMapping(value = "/")
-    // public Room newRoom(@RequestBody Room room) {
-    //
-    //   Room _room = repository.save(new Room(room.getName(), room.getType(), room.getDescription()));
-    //   return _room;
-    // }
+    @PostMapping
+    public Room createRoom(@RequestBody Room room) {
+      System.out.println("Create Room with name " + room.getName());
+
+      Room _room = repository.save(room);
+
+      return _room;
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteRoom(@PathVariable("id") long id) {

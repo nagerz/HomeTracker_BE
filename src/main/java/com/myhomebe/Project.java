@@ -5,8 +5,12 @@ import lombok.*;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Entity;
+import java.util.Objects;
+import javax.persistence.Table;
+import javax.persistence.Column;
 
 @Entity
+@Table(name = "projects")
 @Getter @Setter
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
@@ -20,4 +24,6 @@ public class Project {
     private @NonNull String name;
     @GraphQLQuery(name = "description", description = "A project's description")
     private String description;
+    @GraphQLQuery(name = "address", description = "A project's address")
+    private String address;
 }

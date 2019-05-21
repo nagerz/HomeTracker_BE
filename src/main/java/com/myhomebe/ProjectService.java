@@ -28,6 +28,13 @@ public class ProjectService {
         return projectRepository.findById(id);
     }
 
+    // @GraphQLMutation(name = "createProject")
+    // public Project newProject(@GraphQLArgument(name = "name", name = "address") Project newProject){
+    //     newProject.setName(name);
+    //     newProject.setAddress(address);
+    //     return projectRepository.save(newProject);
+    // }
+
     @GraphQLMutation(name = "saveProject")
     public Project saveProject(@GraphQLArgument(name = "project") Project project){
         return projectRepository.save(project);
