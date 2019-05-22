@@ -1,13 +1,16 @@
 package com.myhomebe.model;
 
-import io.leangen.graphql.annotations.GraphQLQuery;
 import lombok.*;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Entity;
+
+import javax.persistence.*;
 import java.util.Objects;
-import javax.persistence.Table;
-import javax.persistence.Column;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.*;
+
+import io.leangen.graphql.annotations.GraphQLQuery;
 
 @Entity
 @Table(name = "projects")
@@ -17,7 +20,7 @@ import javax.persistence.Column;
 
 public class Project {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GraphQLQuery(name = "id", description = "A project's id")
     private Long id;
     @GraphQLQuery(name = "name", description = "A project's name")
@@ -26,4 +29,8 @@ public class Project {
     private String description;
     @GraphQLQuery(name = "address", description = "A project's address")
     private String address;
+
+    @OneToMany(mappedBy = "project")
+    @JsonIgnoreProperties("project")
+    private List<Room> rooms = new ArrayList<>();
 }
