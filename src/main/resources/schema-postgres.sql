@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS projects cascade;
 DROP TABLE IF EXISTS rooms cascade;
 DROP TABLE IF EXISTS materials cascade;
 DROP TABLE IF EXISTS room_materials;

@@ -1,7 +1,10 @@
 package com.myhomebe.model;
 
 import lombok.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -42,4 +45,10 @@ public class Room {
   //   inverseJoinColumns = @JoinColumn(name = "material_id", referencedColumnName = "id")
   // )
   // private Set<Material> materials  = new HashSet<>();
+
+  @ManyToOne
+  @JoinColumn(name = "room_id")
+  @JsonIgnore
+  // @JsonIgnoreProperties("rooms")
+  Project project;
 }

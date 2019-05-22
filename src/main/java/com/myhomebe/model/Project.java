@@ -4,9 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.leangen.graphql.annotations.GraphQLQuery;
-
 
 @Entity
 @Table(name = "projects")
@@ -25,4 +27,8 @@ public class Project {
     private String description;
     @GraphQLQuery(name = "address", description = "A project's address")
     private String address;
+
+    @OneToMany(mappedBy = "project")
+    @JsonIgnoreProperties("rooms")
+    Set<Room> rooms;
 }
