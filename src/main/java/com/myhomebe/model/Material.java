@@ -8,9 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 // Creates getters, setters, equals, hash, and toString methods
 @Data

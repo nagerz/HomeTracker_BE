@@ -1,9 +1,12 @@
 package com.myhomebe.model;
 
-import io.leangen.graphql.annotations.GraphQLQuery;
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.Objects;
+
+import io.leangen.graphql.annotations.GraphQLQuery;
+
 
 @Entity
 @Table(name = "projects")
