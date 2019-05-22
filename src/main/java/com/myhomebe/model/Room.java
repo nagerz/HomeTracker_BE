@@ -11,6 +11,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 import java.util.Objects;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "rooms")
@@ -26,9 +30,16 @@ public class Room {
   private @NonNull String type;
   private String description;
 
-  Room(String name, String role, String description) {
-    this.name = name;
-    this.type = type;
-    this.description = description;
-  }
+  @OneToMany(mappedBy = "room")
+  // @JsonIgnoreProperties("room")
+  private List<RoomMaterial> roomMaterials = new ArrayList<>();
+  // Set<RoomMaterial> materials;
+
+  // @ManyToMany(cascade = CascadeType.ALL)
+  // @JoinTable(
+  //   name = "room_materials",
+  //   joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "id"),
+  //   inverseJoinColumns = @JoinColumn(name = "material_id", referencedColumnName = "id")
+  // )
+  // private Set<Material> materials  = new HashSet<>();
 }
