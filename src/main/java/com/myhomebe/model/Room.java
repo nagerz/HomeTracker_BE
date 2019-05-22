@@ -2,8 +2,7 @@ package com.myhomebe.model;
 
 import lombok.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -34,8 +33,11 @@ public class Room {
   private String description;
 
   @OneToMany(mappedBy = "room")
-  // @JsonIgnoreProperties("room")
+  @JsonIgnoreProperties("room")
   private List<RoomMaterial> roomMaterials = new ArrayList<>();
+
+
+  // @JsonIgnoreProperties("room")
   // Set<RoomMaterial> materials;
 
   // @ManyToMany(cascade = CascadeType.ALL)
@@ -47,8 +49,8 @@ public class Room {
   // private Set<Material> materials  = new HashSet<>();
 
   @ManyToOne
-  @JoinColumn(name = "room_id")
-  @JsonIgnore
-  // @JsonIgnoreProperties("rooms")
+  @JoinColumn(name = "project_id")
+  // @JsonIgnore
+  @JsonIgnoreProperties("rooms")
   Project project;
 }

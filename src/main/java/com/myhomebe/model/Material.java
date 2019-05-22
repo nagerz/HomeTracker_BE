@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 // Creates getters, setters, equals, hash, and toString methods
 @Data
@@ -34,10 +34,6 @@ public class Material {
   @OneToMany(mappedBy = "material")
   @JsonIgnoreProperties("material")
   private List<RoomMaterial> roomMaterials = new ArrayList<>();
-  // Set<RoomMaterial> rooms;
-
-  // @ManyToMany(mappedBy = "materials")
-  // private Set<Room> rooms = new HashSet<>();
 
   Material() {}
 

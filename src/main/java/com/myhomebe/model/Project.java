@@ -5,8 +5,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import io.leangen.graphql.annotations.GraphQLQuery;
 
@@ -29,6 +31,6 @@ public class Project {
     private String address;
 
     @OneToMany(mappedBy = "project")
-    @JsonIgnoreProperties("rooms")
-    Set<Room> rooms;
+    @JsonIgnoreProperties("project")
+    private List<Room> rooms = new ArrayList<>();
 }
