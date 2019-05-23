@@ -9,24 +9,40 @@ HomeTrackr is a web application designed to aid in tracking the production of ho
 
 ## Getting Started
 
-To run HomeTrackr on a local machine, navigate to the directory in which you would like the project to be located in, then execute the following commands:
+To run HomeTrackr on a local machine, you must have Java installed on your machine. Additionally, the Maven dependency manager and PostgreSQL are required. To install using homebrew:
 
 ```
-$ git clone
-$ cd
+$ brew install maven
+$ brew install postgresql
+```
+
+Navigate to the directory in which you would like the project to be located in, then execute the following commands:
+
+```
+$ git clone git@github.com:nagerz/MyHome_BE.git
+$ cd MyHome_BE
 $ mvn install # Installs dependencies
 ```
 
 If Postgres was locally installed using homebrew, run the command:
 ```
-/usr/local/opt/postgres/bin/createuser -s postgres
-$ CREATE DATABSE app_name; # Creates PostgreSQL Database
+$ /usr/local/opt/postgres/bin/createuser -s postgres # Creates local user named 'postgres' 
+$ CREATE DATABSE my-home-be_development; # Creates PostgreSQL development database 
 ```
-This will create a new postgres user by the name of postgres. This enables all collaborators to utilize the same username and enables the `config.json` file functionality for the database username.
+This creates a local development database by the name of my-home-be_development and new postgres user by the name of postgres so that Spring can identify and access the database (these are set and can be altered in src/main/resources/application.properties).
+
+Run the app on a local server with the command: 
+```
+$ mvn spring-boot:run
+```
+And navigate to:
+```
+$ http://localhost:8080
+```
 
 ## Running Tests
 
-To run the test suite... . The tests will automatically run each time an update is made to the application.
+To run the test suite... There are no tests yet. All tests are automatically run each time an update is made to the application and comitted to the remote repository.
 
 ## Test Coverage
 To run a test coverage report execute the command: .
