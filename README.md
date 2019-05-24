@@ -25,16 +25,16 @@ Navigate to the directory in which you would like the project to be located in, 
 $ git clone git@github.com:nagerz/MyHome_BE.git
 $ cd MyHome_BE
 ```
-Check for an existing PostgresQL user named 'postgres':
+Check for an existing PostgresQL user named 'postgres' (exit postgres with '\q'):
 ```
 $ psql
 $ \du
 ```
-If no 'postgres' user exists, run the command:
+If no 'postgres' user exists, run the command (from within psql):
 ```
 $ /usr/local/opt/postgres/bin/createuser -s postgres 
 ```
-Once created, create a local development database (ending semicolon is required):
+Once created, create a local development database (from within psql, ending semicolon is required):
 ```
 $ CREATE DATABASE my_home_be_development;
 ```
@@ -44,7 +44,6 @@ Finally, install dependencies and build the app.
 ```
 $ mvn install
 ```
-
 Once this setup is complete, you can run the app locally with the command: 
 ```
 $ mvn spring-boot:run
