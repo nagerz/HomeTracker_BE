@@ -36,7 +36,7 @@ $ /usr/local/opt/postgres/bin/createuser -s postgres
 ```
 Once created, create a local development database (ending semicolon is required):
 ```
-$ CREATE DATABSE my_home_be_development;
+$ CREATE DATABASE my_home_be_development;
 ```
 This creates a local development database by the name of my_home_be_development and new postgres user by the name of postgres so that Spring can identify and access the database (these are set and can be altered in src/main/resources/application.properties).
 
