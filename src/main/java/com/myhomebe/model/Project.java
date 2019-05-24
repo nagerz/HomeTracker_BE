@@ -2,13 +2,13 @@ package com.myhomebe.model;
 
 import lombok.*;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
-
-import com.fasterxml.jackson.annotation.*;
 
 import io.leangen.graphql.annotations.GraphQLQuery;
 

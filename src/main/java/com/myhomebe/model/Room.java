@@ -18,6 +18,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
+import io.leangen.graphql.annotations.GraphQLQuery;
+
 @Entity
 @Table(name = "rooms")
 @Getter @Setter
@@ -27,9 +29,13 @@ import java.util.ArrayList;
 public class Room {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GraphQLQuery(name = "id", description = "A room's id")
   private Long id;
+  @GraphQLQuery(name = "name", description = "A room's name")
   private @NonNull String name;
+  @GraphQLQuery(name = "type", description = "A room's type")
   private @NonNull String type;
+  @GraphQLQuery(name = "description", description = "A room's description")
   private String description;
 
   @OneToMany(mappedBy = "room")
@@ -48,7 +54,7 @@ public class Room {
   // )
   // private Set<Material> materials  = new HashSet<>();
 
-  @ManyToOne
+  @ManyToOne(cascade = {CascadeType.ALL})
   @JoinColumn(name = "project_id")
   // @JsonIgnore
   @JsonIgnoreProperties("rooms")

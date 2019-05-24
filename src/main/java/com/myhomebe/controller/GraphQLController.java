@@ -1,6 +1,6 @@
 package com.myhomebe.controller;
 
-import com.myhomebe.service.ProjectService;
+import com.myhomebe.service.GraphQLService;
 
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
@@ -23,12 +23,12 @@ public class GraphQLController {
 
     private final GraphQL graphQL;
 
-    public GraphQLController(ProjectService projectService) {
+    public GraphQLController(GraphQLService graphService) {
         GraphQLSchema schema = new GraphQLSchemaGenerator()
                 .withResolverBuilders(
                         //Resolve by annotations
                         new AnnotatedResolverBuilder())
-                .withOperationsFromSingleton(projectService)
+                .withOperationsFromSingleton(graphService)
                 .withValueMapperFactory(new JacksonValueMapperFactory())
                 .generate();
         graphQL = GraphQL.newGraphQL(schema).build();
