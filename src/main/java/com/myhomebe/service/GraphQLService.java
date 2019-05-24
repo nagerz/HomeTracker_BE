@@ -19,50 +19,55 @@ import java.util.Optional;
 @Service
 public class GraphQLService {
 
-    private final ProjectRepository projectRepository;
-    private final RoomRepository roomRepository;
-    private final MaterialRepository materialRepository;
+  private final ProjectRepository projectRepository;
+  private final RoomRepository roomRepository;
+  private final MaterialRepository materialRepository;
 
-    public GraphQLService(ProjectRepository projectRepository,
-                          RoomRepository roomRepository,
-                          MaterialRepository materialRepository) {
-                            this.projectRepository = projectRepository;
-                            this.roomRepository = roomRepository;
-                            this.materialRepository = materialRepository;
-                          }
+  public GraphQLService(ProjectRepository projectRepository,
+                        RoomRepository roomRepository,
+                        MaterialRepository materialRepository) {
+                          this.projectRepository = projectRepository;
+                          this.roomRepository = roomRepository;
+                          this.materialRepository = materialRepository;
+                        }
 
-    @GraphQLQuery(name = "projects")
-    public List<Project> getProjects(){
-        return projectRepository.findAll();
-    }
+  @GraphQLQuery(name = "projects")
+  public List<Project> getProjects(){
+      return projectRepository.findAll();
+  }
 
-    @GraphQLQuery(name = "rooms")
-    public List<Room> getRooms(){
-        return roomRepository.findAll();
-    }
+  @GraphQLQuery(name = "rooms")
+  public List<Room> getRooms(){
+      return roomRepository.findAll();
+  }
 
-    @GraphQLQuery(name = "materials")
-    public List<Material> getMaterials(){
-        return materialRepository.findAll();
-    }
+  @GraphQLQuery(name = "materials")
+  public List<Material> getMaterials(){
+      return materialRepository.findAll();
+  }
 
-    @GraphQLQuery(name = "project")
-    public Optional<Project> getProjectById(@GraphQLArgument(name = "id") Long id){
-        return projectRepository.findById(id);
-    }
+  @GraphQLQuery(name = "project")
+  public Optional<Project> getProjectById(@GraphQLArgument(name = "id") Long id){
+      return projectRepository.findById(id);
+  }
 
-    @GraphQLQuery(name = "room")
-    public Optional<Room> getRoomById(@GraphQLArgument(name = "id") Long id){
-        return roomRepository.findById(id);
-    }
+  @GraphQLQuery(name = "room")
+  public Optional<Room> getRoomById(@GraphQLArgument(name = "id") Long id){
+      return roomRepository.findById(id);
+  }
 
-    @GraphQLMutation(name = "saveProject")
-    public Project saveProject(@GraphQLArgument(name = "project") Project project){
-        return projectRepository.save(project);
-    }
+  @GraphQLMutation(name = "createProject")
+  public Project createProject(@GraphQLArgument(name = "project") Project project){
+      return projectRepository.save(project);
+  }
 
-    @GraphQLMutation(name = "deleteProject")
-    public void deleteProject(@GraphQLArgument(name = "id") Long id){
-         projectRepository.deleteById(id);
-    }
+  @GraphQLMutation(name = "saveProject")
+  public Project saveProject(@GraphQLArgument(name = "project") Project project){
+      return projectRepository.save(project);
+  }
+
+  @GraphQLMutation(name = "deleteProject")
+  public void deleteProject(@GraphQLArgument(name = "id") Long id){
+       projectRepository.deleteById(id);
+  }
 }
