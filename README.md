@@ -9,29 +9,43 @@ HomeTrackr is a web application designed to aid in tracking the production of ho
 
 ## Getting Started
 
-To run HomeTrackr on a local machine, you must have Java installed on your machine. Additionally, the Maven dependency manager and PostgreSQL are required. To install using homebrew:
+To run HomeTrackr on a local machine, you must have Java and Java SDK installed on your machine. You can check your system for both with the command :
+```
+$ java -version
+```
+If not present, download online.
 
+Additionally, the Maven dependency manager and PostgreSQL are required. To install using homebrew:
 ```
 $ brew install maven
 $ brew install postgresql
 ```
-
-Navigate to the directory in which you would like the project to be located in, then execute the following commands:
-
+Navigate to the directory in which you would like the project to be located in, clone the repository and navigate into the project file:
 ```
 $ git clone git@github.com:nagerz/MyHome_BE.git
 $ cd MyHome_BE
-$ mvn install # Installs dependencies
+```
+Check for an existing PostgresQL user named 'postgres':
+```
+$ psql
+$ \du
+```
+If no 'postgres' user exists, run the command:
+```
+$ /usr/local/opt/postgres/bin/createuser -s postgres 
+```
+Once created, create a local development database (ending semicolon is required):
+```
+$ CREATE DATABSE my_home_be_development;
+```
+This creates a local development database by the name of my_home_be_development and new postgres user by the name of postgres so that Spring can identify and access the database (these are set and can be altered in src/main/resources/application.properties).
+
+Finally, install dependencies and build the app.
+```
+$ mvn install
 ```
 
-If Postgres was locally installed using homebrew, run the command:
-```
-$ /usr/local/opt/postgres/bin/createuser -s postgres # Creates local user named 'postgres' 
-$ CREATE DATABSE my-home-be_development; # Creates PostgreSQL development database 
-```
-This creates a local development database by the name of my-home-be_development and new postgres user by the name of postgres so that Spring can identify and access the database (these are set and can be altered in src/main/resources/application.properties).
-
-Run the app on a local server with the command: 
+Once this setup is complete, you can run the app locally with the command: 
 ```
 $ mvn spring-boot:run
 ```
