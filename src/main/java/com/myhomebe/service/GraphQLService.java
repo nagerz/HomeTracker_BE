@@ -77,6 +77,16 @@ public class GraphQLService {
     return project;
   }
 
+  @GraphQLMutation(name = "addProjectRoom")
+  public Optional<Room> addRoomToProject(@GraphQLArgument(name = "project_id") Long id,
+                              @GraphQLArgument(name = "room") Room room){
+    return projectRepository.findById(id)
+    .map(project -> {
+      room.setProject(project);
+      return roomRepository.save(room);
+    });
+  }
+
   @GraphQLMutation(name = "saveProject")
   public Project saveProject(@GraphQLArgument(name = "project") Project project){
       return projectRepository.save(project);
