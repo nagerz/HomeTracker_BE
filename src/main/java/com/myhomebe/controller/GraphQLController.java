@@ -34,7 +34,7 @@ public class GraphQLController {
         graphQL = GraphQL.newGraphQL(schema).build();
     }
 
-    @PostMapping(value = "/graphql", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/api/v1/graphql", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public Map<String, Object> graphql(@RequestBody Map<String, String> request, HttpServletRequest raw) {
         ExecutionResult executionResult = graphQL.execute(ExecutionInput.newExecutionInput()
