@@ -13,8 +13,10 @@ import io.leangen.graphql.annotations.GraphQLQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 @Service
 public class GraphQLService {
@@ -57,8 +59,22 @@ public class GraphQLService {
   }
 
   @GraphQLMutation(name = "createProject")
-  public Project createProject(@GraphQLArgument(name = "project") Project project){
-      return projectRepository.save(project);
+  public Project createProject(@GraphQLArgument(name = "project") Map<String, String> projectData,
+                              @GraphQLArgument(name = "rooms") ArrayList<Room> roomsArray){
+    Project project = new Project();
+    project.setName(projectData.get("name"));
+    project.setDescription(projectData.get("description"));
+    project.setAddress(projectData.get("address"));
+    projectRepository.save(project);
+    List<Room> rooms=new ArrayList<Room>();
+    for (Room room : roomsArray)
+      {
+        room.setProject(project);
+        roomRepository.save(room);
+        rooms.add(room);
+      }
+    project.setRooms(rooms);
+    return project;
   }
 
   @GraphQLMutation(name = "saveProject")
