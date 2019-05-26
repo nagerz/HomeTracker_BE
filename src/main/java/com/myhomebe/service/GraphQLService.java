@@ -2,9 +2,11 @@ package com.myhomebe.service;
 
 import com.myhomebe.model.Project;
 import com.myhomebe.model.Room;
+import com.myhomebe.model.RoomMaterial;
 import com.myhomebe.model.Material;
 import com.myhomebe.repository.ProjectRepository;
 import com.myhomebe.repository.RoomRepository;
+import com.myhomebe.repository.RoomMaterialRepository;
 import com.myhomebe.repository.MaterialRepository;
 
 import io.leangen.graphql.annotations.GraphQLArgument;
@@ -17,19 +19,23 @@ import java.util.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GraphQLService {
 
   private final ProjectRepository projectRepository;
   private final RoomRepository roomRepository;
+  private final RoomMaterialRepository roomMaterialRepository;
   private final MaterialRepository materialRepository;
 
   public GraphQLService(ProjectRepository projectRepository,
                         RoomRepository roomRepository,
+                        RoomMaterialRepository roomMaterialRepository,
                         MaterialRepository materialRepository) {
                           this.projectRepository = projectRepository;
                           this.roomRepository = roomRepository;
+                          this.roomMaterialRepository = roomMaterialRepository;
                           this.materialRepository = materialRepository;
                         }
 
@@ -46,6 +52,24 @@ public class GraphQLService {
   @GraphQLQuery(name = "materials")
   public List<Material> getMaterials(){
       return materialRepository.findAll();
+  }
+
+  @GraphQLQuery(name = "getRoomMaterials")
+  public Collection<Material> getRoomMaterials(@GraphQLArgument(name = "room_id") Long id){
+    return materialRepository.roomMaterialsByType(id);
+  }
+
+  // @GraphQLQuery(name = "getRoomsMaterials")
+  // public Collection<RoomMaterial> getRoomsMaterials(@GraphQLArgument(name = "room_id") Long id){
+  //   return roomMaterialRepository.roomMaterialsByType(id);
+  // }
+
+  @GraphQLQuery(name = "getRoomsMaterials")
+  public Map<String, List<Material>> getRoomsMaterials(@GraphQLArgument(name = "room_id") Long id){
+    List<RoomMaterial> room_materials = roomMaterialRepository.roomMaterialsByType(id);
+    Map<String, List<Material>> result =
+    room_materials.stream().collect(Collectors.groupingBy(RoomMaterial::getElement_type, Collectors.mapping(RoomMaterial::getMaterial, Collectors.toList())));
+    return result;
   }
 
   @GraphQLQuery(name = "project")
