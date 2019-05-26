@@ -29,8 +29,14 @@ public class Project {
     private String description;
     @GraphQLQuery(name = "address", description = "A project's address")
     private String address;
+    @GraphQLQuery(name = "city", description = "A project's city")
+    private String city;
+    @GraphQLQuery(name = "state", description = "A project's state")
+    private String state;
+    @GraphQLQuery(name = "zip_code", description = "A project's zip code")
+    private String zip_code;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonIgnoreProperties("project")
     private List<Room> rooms = new ArrayList<>();
 }
