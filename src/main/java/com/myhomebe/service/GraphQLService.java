@@ -89,15 +89,20 @@ public class GraphQLService {
     project.setName(projectData.get("name"));
     project.setDescription(projectData.get("description"));
     project.setAddress(projectData.get("address"));
+    project.setCity(projectData.get("city"));
+    project.setState(projectData.get("state"));
+    project.setZip_code(projectData.get("zip_code"));
     projectRepository.save(project);
-    List<Room> rooms=new ArrayList<Room>();
-    for (Room room : roomsArray)
-      {
-        room.setProject(project);
-        roomRepository.save(room);
-        rooms.add(room);
-      }
-    project.setRooms(rooms);
+    if (roomsArray != null) {
+      List<Room> rooms=new ArrayList<Room>();
+      for (Room room : roomsArray)
+        {
+          room.setProject(project);
+          roomRepository.save(room);
+          rooms.add(room);
+        }
+      project.setRooms(rooms);
+    }
     return project;
   }
 
@@ -126,13 +131,34 @@ public class GraphQLService {
     });
   }
 
-  @GraphQLMutation(name = "saveProject")
-  public Project saveProject(@GraphQLArgument(name = "project") Project project){
+  @GraphQLMutation(name = "updateProject")
+  public Optional<Project> updateProject(@GraphQLArgument(name = "project") Project updProject){
+    return projectRepository.findById(updProject.getId())
+    .map(project -> {
+      if (updProject.getName() != null) {
+        project.setName(updProject.getName());
+      }
+      if (updProject.getDescription() != null) {
+        project.setDescription(updProject.getDescription());
+      }
+      if (updProject.getAddress() != null) {
+        project.setAddress(updProject.getAddress());
+      }
+      if (updProject.getCity() != null) {
+        project.setCity(updProject.getCity());
+      }
+      if (updProject.getState() != null) {
+        project.setState(updProject.getState());
+      }
+      if (updProject.getZip_code() != null) {
+        project.setZip_code(updProject.getZip_code());
+      }
       return projectRepository.save(project);
+    });
   }
 
   @GraphQLMutation(name = "deleteProject")
   public void deleteProject(@GraphQLArgument(name = "id") Long id){
-       projectRepository.deleteById(id);
+    projectRepository.deleteById(id);
   }
 }
