@@ -10,11 +10,14 @@ import java.util.HashSet;
 import com.fasterxml.jackson.annotation.*;
 
 // Creates getters, setters, equals, hash, and toString methods
-@Data
+// @Data
 //Make object ready for storage in a JPA-based data store
 @Entity
 //Creates(?) table in postgres dB
 @Table(name = "room_materials")
+@Getter @Setter
+@NoArgsConstructor
+@ToString @EqualsAndHashCode
 
 public class RoomMaterial {
 
@@ -32,10 +35,10 @@ public class RoomMaterial {
   @ManyToOne
   @JoinColumn(name = "material_id", nullable = false)
   private Material material;
-
-  RoomMaterial() {}
-
-  RoomMaterial(String element_type) {
-    this.element_type = element_type;
-  }
+  // 
+  // RoomMaterial() {}
+  //
+  // RoomMaterial(String element_type) {
+  //   this.element_type = element_type;
+  // }
 }

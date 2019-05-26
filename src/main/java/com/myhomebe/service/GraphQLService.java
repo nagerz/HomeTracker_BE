@@ -111,6 +111,21 @@ public class GraphQLService {
     });
   }
 
+  @GraphQLMutation(name = "addRoomMaterial")
+  public Optional<RoomMaterial> addMaterialToRoom(@GraphQLArgument(name = "room_id") Long id,
+                              @GraphQLArgument(name = "element_type") String element_type,
+                              @GraphQLArgument(name = "material") Material material){
+    return roomRepository.findById(id)
+    .map(room -> {
+      Material newMaterial = materialRepository.save(material);
+      RoomMaterial roomMaterial = new RoomMaterial();
+      roomMaterial.setElement_type(element_type);
+      roomMaterial.setRoom(room);
+      roomMaterial.setMaterial(newMaterial);
+      return roomMaterialRepository.save(roomMaterial);
+    });
+  }
+
   @GraphQLMutation(name = "saveProject")
   public Project saveProject(@GraphQLArgument(name = "project") Project project){
       return projectRepository.save(project);
