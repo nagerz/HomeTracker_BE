@@ -38,25 +38,12 @@ public class Room {
   @GraphQLQuery(name = "description", description = "A room's description")
   private String description;
 
-  @OneToMany(mappedBy = "room")
+  @OneToMany(mappedBy = "room", orphanRemoval = true, cascade = CascadeType.ALL)
   @JsonIgnoreProperties("room")
   private List<RoomMaterial> roomMaterials = new ArrayList<>();
 
-
-  // @JsonIgnoreProperties("room")
-  // Set<RoomMaterial> materials;
-
-  // @ManyToMany(cascade = CascadeType.ALL)
-  // @JoinTable(
-  //   name = "room_materials",
-  //   joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "id"),
-  //   inverseJoinColumns = @JoinColumn(name = "material_id", referencedColumnName = "id")
-  // )
-  // private Set<Material> materials  = new HashSet<>();
-
-  @ManyToOne(cascade = {CascadeType.ALL})
+  @ManyToOne
   @JoinColumn(name = "project_id")
-  // @JsonIgnore
   @JsonIgnoreProperties("rooms")
   Project project;
 }

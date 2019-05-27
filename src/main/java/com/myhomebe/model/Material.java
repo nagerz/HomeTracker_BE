@@ -43,7 +43,7 @@ public class Material {
   @GraphQLQuery(name = "unit_price", description = "A material's unit price")
   private Float unit_price;
 
-  @OneToMany(mappedBy = "material")
+  @OneToMany(mappedBy = "material", orphanRemoval = true, cascade = CascadeType.PERSIST)
   @JsonIgnoreProperties("material")
   private List<RoomMaterial> roomMaterials = new ArrayList<>();
 
