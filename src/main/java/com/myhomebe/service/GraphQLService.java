@@ -183,4 +183,9 @@ public class GraphQLService {
   public void deleteRoom(@GraphQLArgument(name = "id") Long id){
     roomRepository.deleteById(id);
   }
+
+  @GraphQLMutation(name = "deleteRoomMaterial")
+  public void deleteRoomMaterial(@GraphQLArgument(name = "id") Long id){
+    roomMaterialRepository.deleteById(id);
+  }
 }
