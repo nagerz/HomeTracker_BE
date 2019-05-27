@@ -157,8 +157,30 @@ public class GraphQLService {
     });
   }
 
+  @GraphQLMutation(name = "updateRoom")
+  public Optional<Room> updateRoom(@GraphQLArgument(name = "room") Room updRoom){
+    return roomRepository.findById(updRoom.getId())
+    .map(room -> {
+      if (updRoom.getName() != null) {
+        room.setName(updRoom.getName());
+      }
+      if (updRoom.getType() != null) {
+        room.setType(updRoom.getType());
+      }
+      if (updRoom.getDescription() != null) {
+        room.setDescription(updRoom.getDescription());
+      }
+      return roomRepository.save(room);
+    });
+  }
+
   @GraphQLMutation(name = "deleteProject")
   public void deleteProject(@GraphQLArgument(name = "id") Long id){
     projectRepository.deleteById(id);
+  }
+
+  @GraphQLMutation(name = "deleteRoom")
+  public void deleteRoom(@GraphQLArgument(name = "id") Long id){
+    roomRepository.deleteById(id);
   }
 }
