@@ -174,6 +174,48 @@ public class GraphQLService {
     });
   }
 
+  @GraphQLMutation(name = "updateProjectMaterial")
+  public Optional<RoomMaterial> updateProjectMaterial(@GraphQLArgument(name = "roomMaterial_id") Long id,
+                                                  @GraphQLArgument(name = "element_type") String element_type,
+                                                  @GraphQLArgument(name = "material") Material updMaterial){
+    return roomMaterialRepository.findById(id)
+      // or else throw not found exception
+    .map(rm -> {
+      Material material = rm.getMaterial();
+      if (updMaterial != null) {
+        if (updMaterial.getName() != null) {
+          material.setName(updMaterial.getName());
+        }
+        if (updMaterial.getModel_number() != null) {
+          material.setModel_number(updMaterial.getModel_number());
+        }
+        if (updMaterial.getBrand() != null) {
+          material.setBrand(updMaterial.getBrand());
+        }
+        if (updMaterial.getVendor() != null) {
+          material.setVendor(updMaterial.getVendor());
+        }
+        if (updMaterial.getManual_url() != null) {
+          material.setManual_url(updMaterial.getManual_url());
+        }
+        if (updMaterial.getNotes() != null) {
+          material.setNotes(updMaterial.getNotes());
+        }
+        if (updMaterial.getQuantity() != null) {
+          material.setQuantity(updMaterial.getQuantity());
+        }
+        if (updMaterial.getUnit_price() != null) {
+          material.setUnit_price(updMaterial.getUnit_price());
+        }
+      }
+      if (element_type != null) {
+        rm.setElement_type(element_type);
+      }
+      materialRepository.save(material);
+      return roomMaterialRepository.save(rm);
+    });
+  }
+
   @GraphQLMutation(name = "deleteProject")
   public void deleteProject(@GraphQLArgument(name = "id") Long id){
     projectRepository.deleteById(id);
