@@ -6,7 +6,8 @@ jobs: # a collection of steps
       - image: circleci/openjdk:8-jdk-browsers # ...with this image as the primary container; this is where all `steps` will run
       - image: circleci/postgres:alpine # and this image as the secondary service container
         environment:
-          POSTGRES_USER: "postgres"
+          POSTGRES_USER: root
+          POSTGRES_DB: my_home_be_development
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
       - restore_cache: # special step to restore the dependency cache
@@ -35,6 +36,10 @@ jobs: # a collection of steps
           name: Deploy Master to Heroku
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+      - run:
+        name: Build on Heroku
+        command: |
+            mvn clean heroku:deploy
 
 workflows:
   version: 2
