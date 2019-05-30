@@ -33,7 +33,7 @@ $ \du
 ```
 If no 'postgres' user exists, run the command (from within psql):
 ```
-$ /usr/local/opt/postgres/bin/createuser -s postgres 
+$ /usr/local/opt/postgres/bin/createuser -s postgres
 ```
 Once created, create a local development database (from within psql, ending semicolon is required):
 ```
@@ -45,7 +45,7 @@ Finally, install dependencies and build the app.
 ```
 $ mvn install
 ```
-Once this setup is complete, you can run the app locally with the command: 
+Once this setup is complete, you can run the app locally with the command:
 ```
 $ mvn spring-boot:run
 ```
@@ -72,7 +72,7 @@ The application is hosted at `https://hometrackr.herokuapp.com` and provides bot
 ## REST Endpoints
 Traditional RESTful endpoints can be utilized as follows:
 
-### User Endpoints (NOT YET AVAILABLE)
+### User Endpoints <b>(NOT YET AVAILABLE)</b>
 #### User Registration
 
 A user can be created and saved in the database in order to track meals and calorie intake. A user is created via a `POST` request to the `/api/v1/users` endpoint. A unique email, password, and matching password_confirmation must be provided, formatted as follows:
@@ -118,11 +118,11 @@ body:
 }
 ```
 ### Project Endpoints
-#### Room Show
+#### Project Show
 
-An individual room currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms/:id` endpoint.
+An individual project currently saved in the database can be retrieved via a `GET` request to the `/api/v1/projects/:id` endpoint.
 
-If the request is successful, the application will return the requested room object, along with a status code of 200.
+If the request is successful, the application will return the requested project object, along with a status code of 200.
 
 ``` HTTP
 status: 200
@@ -130,18 +130,51 @@ body:
 
 {
   "id": 1,
-  "name": "Living Room 1",
-  "type": "Living Room",
-  "description": "Northeast living room"
+  "name": "House 1",
+  "description": "Big, white house",
+  "address": "123 Fake St.",
+  "city": "Denver",
+  "state": "CO",
+  "zip_code": "80205",
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Room 1",
+      ...,
+      "roomMaterials": [
+        {
+          "id": 1,
+          "element_type": "Shower",
+          "material": {
+            "id": 1,
+            ...,
+          }
+        },
+        {
+          "id": 2,
+          "element_type": "Shower",
+          "material": {
+            "id": 2,
+            ...,
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Room 2",
+      ...
+    }
+  ]
 }
 ```
 
 In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
 
-#### Room Index
-All room items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms` endpoint.
+#### Project Index
+All project items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/projects` endpoint.
 
-If the request is successful, the application will return an array containing room objects, along with a status code of 200.
+If the request is successful, the application will return an array containing project objects, along with a status code of 200.
 
 ``` HTTP
 status: 200
@@ -150,28 +183,21 @@ body:
 [
   {
     "id": 1,
-    "name": "Living Room 1",
-    "type": "Living Room",
-    "description": "Northeast living room"
+    "name": "Project 1",
+    "description": "Mayors House",
+    "address": "123 Fake St.",
+    "city": "Denver",
+    "state": "CO",
+    "zip_code": "80205",
+    "rooms": [...]
   },
-  {
-    "id": 2,
-    "name": "Room 2",
-    "type": "Kitchen",
-    "description": "Big Kitchen"
-  },
-  {
-    "id": 3,
-    "name": "Room 3",
-    "type": "Bedroom",
-    "description": "Small bedroom"
-  }
+  {...}
 ]
 ```
 
-#### Room Create
+#### Project Create
 
-A new room item can be created and saved in the database via a `POST` request to the `/api/v1/rooms` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+A new project item can be created and saved in the database via a `POST` request to the `/api/v1/projects` endpoint. The request must contain a project name, and may optionally contain an updated description, address, city, state, or zip code. Request should match the format provided below.
 
 ``` HTTP
 POST /api/v1/homes
@@ -179,30 +205,36 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "New Bedroom",
-  "type": "Bedroom",
-  "description": "The new bedroom"
+  "name": "New Project",
+  "description": "The new project",
+  "address": "123 Fake St.",
+  "city": "Denver",
+  "state": "CO",
+  "zip_code": "80304"
 }
 ```
 
-If the request is successful, the application will return the created room object in the format below, along with a status code of 200.
+If the request is successful, the application will return the created project object in the format below, along with a status code of 200.
 
 ``` HTTP
 status: 200
 body:
 {
     "id": 4,
-    "name": "New Bedroom",
-    "type": "Bedroom",
-    "description": "The new bedroom"
+    "name": "New Project",
+    "description": "The new project",
+    "address": "123 Fake St.",
+    "city": "Denver",
+    "state": "CO",
+    "zip_code": "80304"
 }
 ```
 
 In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
 
-#### Room Update
+#### Project Update
 
-An existing room's information can be updated in the database via a `PATCH` request to the `/api/v1/rooms/:id` endpoint. The request may contain any field to be updated. Request should match the format provided below.
+An existing project's information can be updated in the database via a `PATCH` request to the `/api/v1/projects/:id` endpoint. The request may contain any field to be updated. Request should match the format provided below.
 
 ``` HTTP
 POST /api/v1/homes
@@ -210,30 +242,30 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Updated Bedroom",
-  "type": "Bedroom",
-  "description": "The updated bedroom",
+  "name": "Updated project",
+  "description": "The updated project",
+  "address": "new address"
 }
 ```
 
-If the request is successful, the application will return the updated room object in the format below, along with a status code of 200.
+If the request is successful, the application will return the updated project object in the format below, along with a status code of 200.
 
 ``` HTTP
 status: 200
 body:
 {
-    "id": 4,
-    "name": "Updated Bedroom",
-    "type": "Bedroom",
-    "description": "The updated bedroom"
+    "id": 1,
+    "name": "Updated project",
+    "description": "The updated project",
+    "address": "new address"
 }
 ```
 
 In the event that the request is unsuccessful, the application will return an error message, along with a status code of 404.
 
 
-#### Room Deletion
-To delete an existing room, send a `DELETE` request to the endpoint `/api/v1/rooms/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
+#### Project Deletion
+To delete an existing project, send a `DELETE` request to the endpoint `/api/v1/projects/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
 ``` HTTP
 status: 404
 body:
@@ -509,9 +541,75 @@ body:
 }
 ```
 
-## Tools
-* Circle CI
+## GraphQL Endpoints
+Alternatively, the endpoints above as well as additional endpoints can be accessed with additional flexibility through GraphQL. These endpoints are all used via `POST` requests to a single `/api/v1/graphql` endpoint. They are distinguished by different query objects sent in the body of the POST request. Additionally, a graphQL interface can be used to aid in the formatting of custom requests. This interface can be found at the `/graphiql` endpoint. The available endpoints and their associated request structures are as follow:
 
+### Project Endpoints
+#### Project Show
+
+An individual project currently saved in the database can be retrieved with a project query and by supplying an appropriate project id. Retrievable project fields include id, name, description, address, city, state, and zip code, as well as any associated rooms, and roomMaterials.
+
+A successful request following the format below will return the requested project object, along with a status code of 200.
+``` HTTP
+POST /api/v1/graphql
+Content-Type: application/json
+Accept: application/json
+
+{
+  project (id: 1) {
+    id
+    name
+    description
+    address
+    rooms {
+      name
+      type
+      description
+    }
+  }
+}
+```
+
+``` HTTP
+status: 200
+body:
+
+{
+  "data": {
+    "project": {
+      "id": 1,
+      "name": "House 1",
+      "description": "Big, white house",
+      "address": "123 Fake St.",
+      "rooms": [
+        {
+          "name": "Living Room 1",
+          "type": "Living Room",
+          "description": "Northeast living room"
+        },
+        {
+          "name": "Room 2",
+          "type": "Kitchen",
+          "description": "Big Kitchen"
+        }
+      ]
+    }
+  }
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
+
+## Tools
+* Java
+* Spring Boot
+* GraphQL
+* Maven
+* JUnit
+* PostgreSQL
+* JPA/Hibernate
+* Circle CI
+* Heroku
 
 ## How to Contribute
 
