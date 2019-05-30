@@ -7,11 +7,10 @@ HomeTracker is a web application designed to aid in tracking the production of h
 #### [**_View the Full HomeTracker App_**](https://your-home.herokuapp.com/) </br>
 
 ### Schema
-![](https://files.slack.com/files-pri/T029P2S9M-FJHJJ1LV8/image.png)
 
 ## Getting Started
 
-To run HomeTrackr on a local machine, you must have Java and Java SDK installed on your machine. You can check your system for both with the command :
+To run HomeTracker on a local machine, you must have Java and Java SDK installed on your machine. You can check your system for both with the command :
 ```
 $ java -version
 ```
@@ -57,17 +56,21 @@ $ http://localhost:8080
 
 ## Running Tests
 
-To run the test suite... There are no tests yet. All tests are automatically run each time an update is made to the application and comitted to the remote repository.
-
-## Test Coverage
-To run a test coverage report execute the command: .
-
-## Deployment
-
-To view HomeTrackr in development, execute the following command from the project directory: `mvn spring-boot:run`. To view the application in a web browser, visit `localhost:8080` and navigate the the desired endpoint.
+To run the test suite use the command:
+```
+$ mvn clean test
+```
+The status of all tests run will be displayed. A more thourough test coverage report can be opened using:
+```
+$ open target/site/jacoco/index.html
+```
+All tests are automatically run each time an update is made to the application and comitted to the remote repository. Upon a successful branch merge, updates are automatically pushed to production on Heroku. (Continuous integration through CircleCI).
 
 ## Available Endpoints
-The application is hosted at `https://hometrackr.herokuapp.com` and provides the following endpoints:
+The application is hosted at `https://hometrackr.herokuapp.com` and provides both traditional RESTful API endpoints, as well as GraphQL endpoints.
+
+## REST Endpoints
+Traditional RESTful endpoints can be utilized as follows:
 
 ### User Endpoints (NOT YET AVAILABLE)
 #### User Registration
@@ -115,6 +118,129 @@ body:
 }
 ```
 ### Project Endpoints
+#### Room Show
+
+An individual room currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms/:id` endpoint.
+
+If the request is successful, the application will return the requested room object, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+
+{
+  "id": 1,
+  "name": "Living Room 1",
+  "type": "Living Room",
+  "description": "Northeast living room"
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
+
+#### Room Index
+All room items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms` endpoint.
+
+If the request is successful, the application will return an array containing room objects, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+
+[
+  {
+    "id": 1,
+    "name": "Living Room 1",
+    "type": "Living Room",
+    "description": "Northeast living room"
+  },
+  {
+    "id": 2,
+    "name": "Room 2",
+    "type": "Kitchen",
+    "description": "Big Kitchen"
+  },
+  {
+    "id": 3,
+    "name": "Room 3",
+    "type": "Bedroom",
+    "description": "Small bedroom"
+  }
+]
+```
+
+#### Room Create
+
+A new room item can be created and saved in the database via a `POST` request to the `/api/v1/rooms` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+
+``` HTTP
+POST /api/v1/homes
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "New Bedroom",
+  "type": "Bedroom",
+  "description": "The new bedroom"
+}
+```
+
+If the request is successful, the application will return the created room object in the format below, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+{
+    "id": 4,
+    "name": "New Bedroom",
+    "type": "Bedroom",
+    "description": "The new bedroom"
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
+
+#### Room Update
+
+An existing room's information can be updated in the database via a `PATCH` request to the `/api/v1/rooms/:id` endpoint. The request may contain any field to be updated. Request should match the format provided below.
+
+``` HTTP
+POST /api/v1/homes
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Updated Bedroom",
+  "type": "Bedroom",
+  "description": "The updated bedroom",
+}
+```
+
+If the request is successful, the application will return the updated room object in the format below, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+{
+    "id": 4,
+    "name": "Updated Bedroom",
+    "type": "Bedroom",
+    "description": "The updated bedroom"
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 404.
+
+
+#### Room Deletion
+To delete an existing room, send a `DELETE` request to the endpoint `/api/v1/rooms/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
+``` HTTP
+status: 404
+body:
+{
+    "error": "Request does not match any records."
+}
+```
 
 ### Room Endpoints
 #### Room Show
