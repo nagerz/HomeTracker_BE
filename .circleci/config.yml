@@ -3,7 +3,7 @@ jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
     working_directory: ~/my-home-be # directory where steps will run
     docker: # run the steps with Docker
-      - image: circleci/openjdk:8-jdk-browsers # ...with this image as the primary container; this is where all `steps` will run
+      - image: circleci/openjdk:8u171-jdk # ...with this image as the primary container; this is where all `steps` will run
       - image: circleci/postgres:alpine # and this image as the secondary service container
         environment:
           POSTGRES_USER: root
