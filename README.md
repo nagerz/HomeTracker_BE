@@ -625,7 +625,7 @@ In the event that the request is unsuccessful, the application will return an er
 2. Create a new issue if applicable, or contribute to an existing issue.
 
 ### Related Links:
-###### * [**_Agile Project Board_**](https://github.com/easbell/Your-Home/projects/1)
+* [Agile Project Board](https://github.com/easbell/Your-Home/projects/1)
 
 ### Authors
 * [Zach Nager](https://github.com/nagerz)
