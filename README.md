@@ -1,9 +1,10 @@
 # README
 
 ## Description
-HomeTrackr is a web application designed to aid in tracking the production of home and other residential construction projects. The backend service enables reading and writing database access to a users projects, including rooms and materials used during the construction of those rooms. HomeTrackr is a Java application utilizing Spring Boot, PostgreSQL, and GraphQL.
+HomeTracker is a web application designed to aid in tracking the production of home and other residential construction projects. The backend service enables reading and writing database access to a users projects, including rooms and materials used during the construction of those rooms. HomeTracker is a Java application utilizing Spring Boot, PostgreSQL, and GraphQL.
 
-#### [**_View HomeTrackr in Production_**](https://hometrackr.herokuapp.com/) </br>
+#### [**_View HomeTracker BE in Production_**](https://hometrackr.herokuapp.com/) </br>
+#### [**_View the full HomeTracker_App **](https://your-home.herokuapp.com/) </br>
 
 ### Schema
 
