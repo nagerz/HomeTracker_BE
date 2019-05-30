@@ -2,12 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.my-home-be</groupId>
 	<artifactId>my-home</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -80,6 +82,32 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+	    	<groupId>org.json</groupId>
+	    	<artifactId>json</artifactId>
+	    	<version>20180130</version>
+		</dependency>
+		<dependency>
+	    	<groupId>com.googlecode.json-simple</groupId>
+	    	<artifactId>json-simple</artifactId>
+	    	<version>1.1</version>
+		</dependency>
+		<!-- <dependency>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-surefire-plugin</artifactId>
+		  <version>2.22.1</version>
+		  <type>maven-plugin</type>
+			<exclusions>
+	      <exclusion>
+	        <groupId>org.slf4j</groupId>
+	        <artifactId>slf4j-log4j12</artifactId>
+	      </exclusion>
+	      <exclusion>
+	        <groupId>log4j</groupId>
+	        <artifactId>log4j</artifactId>
+	      </exclusion>
+	    </exclusions>
+		</dependency> -->
 	</dependencies>
 
 	<build>
@@ -88,6 +116,46 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- <plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
+        <version>2.0.3</version>
+        <configuration>
+          <appName>hometrackr</appName>
+          <jdkVersion>${java.version}</jdkVersion>
+          <processTypes>
+            <web>java $JAVA_OPTS -jar target/${project.build.finalName}.jar</web>
+          </processTypes>
+        </configuration>
+      </plugin> -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<!-- attached to Maven test phase -->
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-surefire-plugin</artifactId>
+		    <version>2.22.1</version>
+		    <configuration>
+		      <useSystemClassLoader>false</useSystemClassLoader>
+		    </configuration>
+		  </plugin>
 		</plugins>
 	</build>
 

@@ -5,8 +5,6 @@ import lombok.*;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
-import java.util.Objects;
-import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -14,9 +12,11 @@ import io.leangen.graphql.annotations.GraphQLQuery;
 
 @Entity
 @Table(name = "projects")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
-@ToString @EqualsAndHashCode
+// @ToString
+// @EqualsAndHashCode
 
 public class Project {
     @Id
