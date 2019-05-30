@@ -92,13 +92,10 @@
 	    	<artifactId>json-simple</artifactId>
 	    	<version>1.1</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 		  <groupId>org.apache.maven.plugins</groupId>
 		  <artifactId>maven-surefire-plugin</artifactId>
 		  <version>2.22.1</version>
-			<configuration>
-	      <useSystemClassLoader>false</useSystemClassLoader>
-	    </configuration>
 		  <type>maven-plugin</type>
 			<exclusions>
 	      <exclusion>
@@ -110,7 +107,7 @@
 	        <artifactId>log4j</artifactId>
 	      </exclusion>
 	    </exclusions>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>
@@ -119,7 +116,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
         <groupId>com.heroku.sdk</groupId>
         <artifactId>heroku-maven-plugin</artifactId>
         <version>2.0.3</version>
@@ -130,7 +127,7 @@
             <web>java $JAVA_OPTS -jar target/${project.build.finalName}.jar</web>
           </processTypes>
         </configuration>
-      </plugin>
+      </plugin> -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -151,6 +148,14 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-surefire-plugin</artifactId>
+		    <version>2.22.1</version>
+		    <configuration>
+		      <useSystemClassLoader>false</useSystemClassLoader>
+		    </configuration>
+		  </plugin>
 		</plugins>
 	</build>
 
