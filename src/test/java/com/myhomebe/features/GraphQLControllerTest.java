@@ -124,16 +124,44 @@ public class GraphQLControllerTest{
     final String baseUrl = "http://localhost:"+randomServerPort+"/api/v1/graphql/";
     URI uri = new URI(baseUrl);
 
-		JSONObject body = new JSONObject();
-		body.put("query", "mutation{updateProject(project: {id: 2, name: \"Updated House\", city: \"Different City\"}) {id name city state}}");
+    //Before update
+		JSONObject body1 = new JSONObject();
+		body1.put("query", "{room(id: 2) {id roomMaterials{element_type material{ name vendor brand model_number manual_url notes quantity unit_price}}}}");
 
-    HttpEntity<JSONObject> request = new HttpEntity<JSONObject>(body);
+    HttpEntity<JSONObject> request1 = new HttpEntity<JSONObject>(body1);
 
-    ResponseEntity<String> result = this.restTemplate.postForEntity(uri, request, String.class);
+    ResponseEntity<String> result1 = this.restTemplate.postForEntity(uri, request1, String.class);
 
-    String expected = "{\"data\":{\"updateProject\":{\"id\":2,\"name\":\"Updated House\",\"city\":\"Different City\",\"state\":\"CO\"}}}";
+    String expected1 = "{\"data\":{\"room\":{\"id\":2,\"roomMaterials\":[{\"element_type\":\"Shower\",\"material\":{\"name\":\"Material 1\",\"vendor\":\"HD\",\"brand\":\"Kenmoore\",\"model_number\":\"abc1\",\"manual_url\":null,\"notes\":null,\"quantity\":null,\"unit_price\":null}}]}}}";
+
+    Assert.assertEquals(200, result1.getStatusCodeValue());
+    Assert.assertEquals(expected1, result1.getBody());
+
+    //Update request
+    JSONObject body2 = new JSONObject();
+		body2.put("query", "mutation{updateProjectMaterial(roomMaterial_id: 3, element_type: \"Flooring\", material: {name: \"Updated material\", brand: \"Updated Brand\", model_number: \"Updated number\", vendor: \"Updated vendor\", manual_url: \"Updated url\", notes: \"Updated notes\", quantity: 5, unit_price: 500}) {id element_type material{name brand vendor manual_url unit_price quantity model_number notes}}}");
+
+    HttpEntity<JSONObject> request2 = new HttpEntity<JSONObject>(body2);
+
+    ResponseEntity<String> result2 = this.restTemplate.postForEntity(uri, request2, String.class);
+
+    String expected2 = "{\"data\":{\"updateProjectMaterial\":{\"id\":3,\"element_type\":\"Flooring\",\"material\":{\"name\":\"Updated material\",\"brand\":\"Updated Brand\",\"vendor\":\"Updated vendor\",\"manual_url\":\"Updated url\",\"unit_price\":500.0,\"quantity\":5.0,\"model_number\":\"Updated number\",\"notes\":\"Updated notes\"}}}}";
+
     //Verify request succeed
-    Assert.assertEquals(200, result.getStatusCodeValue());
-    Assert.assertEquals(expected, result.getBody());
+    Assert.assertEquals(200, result2.getStatusCodeValue());
+    Assert.assertEquals(expected2, result2.getBody());
+
+    //Verify database after request
+    JSONObject body3 = new JSONObject();
+		body3.put("query", "{room(id: 2) {id roomMaterials{element_type material{ name vendor brand model_number manual_url notes quantity unit_price}}}}");
+
+    HttpEntity<JSONObject> request3 = new HttpEntity<JSONObject>(body3);
+
+    ResponseEntity<String> result3 = this.restTemplate.postForEntity(uri, request3, String.class);
+
+    String expected3 = "{\"data\":{\"room\":{\"id\":2,\"roomMaterials\":[{\"element_type\":\"Flooring\",\"material\":{\"name\":\"Updated material\",\"vendor\":\"Updated vendor\",\"brand\":\"Updated Brand\",\"model_number\":\"Updated number\",\"manual_url\":\"Updated url\",\"notes\":\"Updated notes\",\"quantity\":5.0,\"unit_price\":500.0}}]}}}";
+
+    Assert.assertEquals(200, result3.getStatusCodeValue());
+    Assert.assertEquals(expected3, result3.getBody());
   }
 }
