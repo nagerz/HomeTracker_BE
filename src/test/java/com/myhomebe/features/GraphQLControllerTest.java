@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 // Syntax would be used for using different database than development
 // @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT, properties = {"spring.config.name=my-home-be-test-h2","my-home-be.trx.datasource.url=jdbc:h2:mem:trxServiceStatus"})
+
 // Used to reset database before each test
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GraphQLControllerTest{
