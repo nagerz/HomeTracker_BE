@@ -118,4 +118,22 @@ public class GraphQLControllerTest{
     Assert.assertEquals(200, result.getStatusCodeValue());
     Assert.assertEquals(expected, result.getBody());
   }
+
+  @Test
+  public void testUpdateProjectMaterial() throws URISyntaxException{
+    final String baseUrl = "http://localhost:"+randomServerPort+"/api/v1/graphql/";
+    URI uri = new URI(baseUrl);
+
+		JSONObject body = new JSONObject();
+		body.put("query", "mutation{updateProject(project: {id: 2, name: \"Updated House\", city: \"Different City\"}) {id name city state}}");
+
+    HttpEntity<JSONObject> request = new HttpEntity<JSONObject>(body);
+
+    ResponseEntity<String> result = this.restTemplate.postForEntity(uri, request, String.class);
+
+    String expected = "{\"data\":{\"updateProject\":{\"id\":2,\"name\":\"Updated House\",\"city\":\"Different City\",\"state\":\"CO\"}}}";
+    //Verify request succeed
+    Assert.assertEquals(200, result.getStatusCodeValue());
+    Assert.assertEquals(expected, result.getBody());
+  }
 }
