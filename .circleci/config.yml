@@ -31,6 +31,8 @@ jobs: # a collection of steps
     machine:
       enabled: true
     working_directory: ~/my-home-be
+    environment:
+       HEROKU_APP: "hometrackr"
     steps:
       - checkout
       - run:
