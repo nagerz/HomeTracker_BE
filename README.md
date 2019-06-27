@@ -653,7 +653,56 @@ body:
 
 #### Project Create
 
-A new project item can be created and saved in the database via a `POST` request to the `/api/v1/projects` endpoint. The request must contain a project name, and may optionally contain an updated description, address, city, state, or zip code. Request should match the format provided below.
+A new project item can be created (with or without new rooms supplied) and saved in the database via a 'createProject' mutation query to the graphql endpoint. The request must contain a project name, and may optionally contain a description, address, city, state, or zip code, and an array of 1 or more rooms to be created. Request should match the format provided below. Retrievable project fields include id, name, description, address, city, state, and zip code, as well as any associated rooms and their associated fields.
+
+```
+mutation {
+  createProject (
+    project: {name: "House 4", description: "made by graphql", address: "another address"},
+    rooms: [
+      {name: "new room", type: "new type"},
+      {name: "new room 2", type: "room 2 type"}
+    ])
+  {
+    id
+    name
+    description
+    address
+    rooms {
+      id
+      name
+      type
+    }
+  }
+}
+```
+
+If the request is successful, the application will return the created project object in the format below, along with a status code of 200.
+
+```
+{
+  "data": {
+    "createProject": {
+      "id": 3,
+      "name": "House 4",
+      "description": "made by graphql",
+      "address": "another address",
+      "rooms": [
+        {
+          "id": 4,
+          "name": "new room",
+          "type": "new type"
+        },
+        {
+          "id": 5,
+          "name": "new room 2",
+          "type": "room 2 type"
+        }
+      ]
+    }
+  }
+}
+```
 
 #### Project Update
 
