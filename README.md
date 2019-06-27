@@ -265,7 +265,7 @@ In the event that the request is unsuccessful, the application will return an er
 
 
 #### Project Deletion
-To delete an existing project, send a `DELETE` request to the endpoint `/api/v1/projects/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
+To delete an existing project, send a `DELETE` request to the endpoint `/api/v1/projects/:id`. A successful request will delete the applicable Project record in the database and return a status code of `204`. An unsuccessful request will return the following:
 ``` HTTP
 status: 404
 body:
@@ -743,19 +743,43 @@ HTTP
 status: 200
 body:
 {
-    "data": {
-        "updateProject": {
-            "id": 2,
-            "name": "Updated House",
-            "city": "Different City",
-            "state": null
-        }
+  "data": {
+    "updateProject": {
+      "id": 2,
+      "name": "Updated House",
+      "city": "Different City",
+      "state": null
     }
+  }
 }
 ```
 
 #### Project Deletion
-To delete an existing project, send a `DELETE` request to the endpoint `/api/v1/projects/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
+To delete an existing project, a 'deleteProject' mutation query can be sent to the graphql endpoint per below. A successful request will delete the applicable Project record in the database and return a status code of `204`.
+
+```
+HTTP
+POST /api/v1/graphql
+Content-Type: application/json
+Accept: application/json
+body:
+mutation {
+  deleteProject(id: 1)
+}
+```
+
+Successful response:
+
+```
+HTTP
+status: 200
+body:
+{
+  "data": {
+    "deleteProject": null
+  }
+}
+```
 
 ### Room Endpoints
 #### Room Show
