@@ -549,11 +549,13 @@ Alternatively, the endpoints above as well as additional endpoints can be access
 An individual project currently saved in the database can be retrieved with a project query and by supplying an appropriate project id. Retrievable project fields include id, name, description, address, city, state, and zip code, as well as any associated rooms, and roomMaterials.
 
 A successful request following the format below will return the requested project object, along with a status code of 200.
-``` HTTP
+
+```
+HTTP
 POST /api/v1/graphql
 Content-Type: application/json
 Accept: application/json
-
+body:
 {
   project (id: 1) {
     id
@@ -569,10 +571,10 @@ Accept: application/json
 }
 ```
 
-``` HTTP
+```
+HTTP
 status: 200
 body:
-
 {
   "data": {
     "project": {
@@ -600,11 +602,13 @@ body:
 All project items currently saved in the database can be retrieved via a `projects` query to the graphql endpoint. Retrievable project fields include id, name, description, address, city, state, and zip code, as well as any associated rooms, roomMaterials, and their associated fields.
 
 A successful request following the format below will return an array of project objects, along with a status code of 200.
-``` HTTP
+
+```
+HTTP
 POST /api/v1/graphql
 Content-Type: application/json
 Accept: application/json
-
+body:
 {
   projects {
     id
@@ -620,10 +624,10 @@ Accept: application/json
 }
 ```
 
-``` HTTP
+```
+HTTP
 status: 200
 body:
-
 {
   "data": {
     "projects": [
@@ -653,17 +657,22 @@ body:
 
 #### Project Create
 
-A new project item can be created (with or without new rooms supplied) and saved in the database via a 'createProject' mutation query to the graphql endpoint. The request must contain a project name, and may optionally contain a description, address, city, state, or zip code, and an array of 1 or more rooms to be created. Request should match the format provided below. Retrievable project fields include id, name, description, address, city, state, and zip code, as well as any associated rooms and their associated fields.
+A new project item can be created (with or without new rooms supplied) and saved in the database via a 'createProject' mutation query to the graphql endpoint. The request must contain a project object including a name, and may optionally contain a description, address, city, state, or zip code, and an array of 1 or more room objects to be created. Request should match the format provided below. Response project fields include id, name, description, address, city, state, and zip code, as well as any associated rooms and their associated fields.
 
 ```
+HTTP
+POST /api/v1/graphql
+Content-Type: application/json
+Accept: application/json
+body:
 mutation {
   createProject (
     project: {name: "House 4", description: "made by graphql", address: "another address"},
     rooms: [
       {name: "new room", type: "new type"},
       {name: "new room 2", type: "room 2 type"}
-    ])
-  {
+    ]
+  ){
     id
     name
     description
@@ -680,6 +689,9 @@ mutation {
 If the request is successful, the application will return the created project object in the format below, along with a status code of 200.
 
 ```
+HTTP
+status: 200
+body:
 {
   "data": {
     "createProject": {
@@ -706,8 +718,41 @@ If the request is successful, the application will return the created project ob
 
 #### Project Update
 
-An existing project's information can be updated in the database via a `PATCH` request to the `/api/v1/projects/:id` endpoint. The request may contain any field to be updated. Request should match the format provided below.
+An existing project's information can be updated in the database via a 'updateProject' mutation query to the graphql endpoint. The request must contain a project object with an existing project id, and may optionally contain any project fields to be updated. Request should match the format provided below. Response project fields include id, name, description, address, city, state, and zip code.
 
+```
+HTTP
+POST /api/v1/graphql
+Content-Type: application/json
+Accept: application/json
+body:
+mutation {
+  updateProject(project: {id: 2, name: "Updated House", city: "Different City"}) {
+    id
+    name
+    city
+    state
+  }
+}
+```
+
+If the request is successful, the application will return the updated project object in the format below, along with a status code of 200.
+
+```
+HTTP
+status: 200
+body:
+{
+    "data": {
+        "updateProject": {
+            "id": 2,
+            "name": "Updated House",
+            "city": "Different City",
+            "state": null
+        }
+    }
+}
+```
 
 #### Project Deletion
 To delete an existing project, send a `DELETE` request to the endpoint `/api/v1/projects/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
