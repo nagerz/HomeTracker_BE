@@ -546,7 +546,6 @@ Alternatively, the endpoints above as well as additional endpoints can be access
 
 ### Project Endpoints
 #### Project Show
-
 An individual project currently saved in the database can be retrieved with a project query and by supplying an appropriate project id. Retrievable project fields include id, name, description, address, city, state, and zip code, as well as any associated rooms, and roomMaterials.
 
 A successful request following the format below will return the requested project object, along with a status code of 200.
@@ -597,8 +596,110 @@ body:
   }
 }
 ```
+#### Project Index
+All project items currently saved in the database can be retrieved via a `projects` query to the graphql endpoint. Retrievable project fields include id, name, description, address, city, state, and zip code, as well as any associated rooms, roomMaterials, and their associated fields.
 
-In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
+A successful request following the format below will return an array of project objects, along with a status code of 200.
+``` HTTP
+POST /api/v1/graphql
+Content-Type: application/json
+Accept: application/json
+
+{
+  projects {
+    id
+    name
+    description
+    address
+    rooms {
+      name
+      type
+      description
+    }
+  }
+}
+```
+
+``` HTTP
+status: 200
+body:
+
+{
+  "data": {
+    "projects": [
+      {
+        "id": 1,
+        "name": "House 1",
+        "description": "Big, white house",
+        "address": "123 Fake St.",
+        "rooms": [
+          {
+            "name": "Living Room 1",
+            "type": "Living Room",
+            "description": "Northeast living room"
+          },
+          {
+            "name": "Room 2",
+            "type": "Kitchen",
+            "description": "Big Kitchen"
+          }
+        ]
+      },
+      {...}
+    ]
+  }
+}
+```
+
+#### Project Create
+
+A new project item can be created and saved in the database via a `POST` request to the `/api/v1/projects` endpoint. The request must contain a project name, and may optionally contain an updated description, address, city, state, or zip code. Request should match the format provided below.
+
+#### Project Update
+
+An existing project's information can be updated in the database via a `PATCH` request to the `/api/v1/projects/:id` endpoint. The request may contain any field to be updated. Request should match the format provided below.
+
+
+#### Project Deletion
+To delete an existing project, send a `DELETE` request to the endpoint `/api/v1/projects/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
+
+### Room Endpoints
+#### Room Show
+
+An individual room currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms/:id` endpoint.
+
+#### Room Index
+All room items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/rooms` endpoint.
+
+#### Room Create
+
+A new room item can be created and saved in the database via a `POST` request to the `/api/v1/rooms` endpoint. The request must contain a room name and type, and may contain an optional description. Request should match the format provided below.
+
+#### Room Update
+
+An existing room's information can be updated in the database via a `PATCH` request to the `/api/v1/rooms/:id` endpoint. The request may contain any field to be updated. Request should match the format provided below.
+
+#### Room Deletion
+To delete an existing room, send a `DELETE` request to the endpoint `/api/v1/rooms/:id`. A successful request will delete the applicable Room record in the database and return a status code of `204`. An unsuccessful request will return the following:
+
+### Material Endpoints
+#### Material Show
+
+An individual material currently saved in the database can be retrieved via a `GET` request to the `/api/v1/materials/:id` endpoint.
+
+#### Material Index
+All material items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/materials` endpoint.
+
+#### Material Create
+
+A new material item can be created and saved in the database via a `POST` request to the `/api/v1/materials` endpoint. The request must contain a material name, and may contain optional fields of vendor, brand, model number, manual url location, notes, quantity, and unit price (in cents). Request should match the format provided below.
+
+#### Material Update
+
+An existing material's information can be updated in the database via a `PATCH` request to the `/api/v1/materials/:id` endpoint. The request must contain any field to be updated. Request should match the format provided below.
+
+#### Material Deletion
+To delete an existing material, send a `DELETE` request to the endpoint `/api/v1/materials/:id`. A successful request will delete the applicable Material record in the database and return a status code of `204`. An unsuccessful request will return the following:
 
 ## Tools
 * Java
